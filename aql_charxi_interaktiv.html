@@ -1,0 +1,1912 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aql Charxi — Interaktiv Rivojlantiruvchi O‘yinlar va Yulduzlar Do‘koni</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 45%, #fef3c7 100%);
+            --card-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+            --card-hover-shadow: 0 20px 38px rgba(15, 23, 42, 0.15);
+            --primary-font: 'Nunito', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--primary-font);
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            color: #1e293b;
+            overflow-x: hidden;
+            transition: background 0.4s ease, color 0.3s ease;
+        }
+
+        .fw-black {
+            font-weight: 900 !important;
+        }
+
+        .top-navbar {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border-radius: 0 0 24px 24px;
+            z-index: 1030;
+        }
+
+        .brand-badge {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            color: #ffffff;
+            border-radius: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.65rem;
+            box-shadow: 0 6px 15px rgba(99, 102, 241, 0.35);
+            animation: floatSlow 3s ease-in-out infinite;
+        }
+
+        .active-title-pill {
+            font-size: 0.74rem;
+            background: #eef2ff;
+            color: #4f46e5;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 800;
+        }
+
+        .star-counter-pill {
+            background: linear-gradient(135deg, #fef08a, #fde047);
+            border: 2px solid #facc15;
+            color: #854d0e;
+            border-radius: 50px;
+            padding: 0.4rem 1rem;
+            font-weight: 900;
+            font-size: 1.05rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(250, 204, 21, 0.3);
+        }
+
+        .shop-nav-btn {
+            background: linear-gradient(135deg, #f97316, #ec4899);
+            color: #ffffff;
+            border: none;
+            border-radius: 50px;
+            font-weight: 800;
+            padding: 0.45rem 1.15rem;
+            box-shadow: 0 5px 15px rgba(236, 72, 153, 0.35);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .shop-nav-btn:hover {
+            transform: translateY(-2px) scale(1.04);
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(236, 72, 153, 0.45);
+        }
+
+        .sound-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid #e2e8f0;
+            background: #ffffff;
+            color: #4f46e5;
+            font-size: 1.25rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .sound-btn:hover {
+            transform: scale(1.08);
+            background: #eef2ff;
+        }
+
+        .sound-btn.muted {
+            color: #94a3b8;
+            background: #f8fafc;
+        }
+
+        .age-card {
+            border: none;
+            border-radius: 28px;
+            padding: 2rem 1.5rem;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .age-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        .age-card-6-9 {
+            background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%);
+        }
+
+        .age-card-9-13 {
+            background: linear-gradient(135deg, #38bdf8 0%, #3b82f6 100%);
+        }
+
+        .age-card-13-17 {
+            background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+        }
+
+        .age-emoji {
+            font-size: 4rem;
+            display: inline-block;
+            margin-bottom: 0.75rem;
+            filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.15));
+            transition: transform 0.3s ease;
+        }
+
+        .age-card:hover .age-emoji {
+            transform: scale(1.15) rotate(6deg);
+        }
+
+        .game-select-card {
+            background: #ffffff;
+            border: 2px solid #f1f5f9;
+            border-radius: 24px;
+            padding: 1.4rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: var(--card-shadow);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .game-select-card:hover {
+            transform: translateY(-7px);
+            border-color: #818cf8;
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        .game-icon-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .game-arena-card {
+            background: #ffffff;
+            border-radius: 30px;
+            padding: 1.75rem;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.1);
+            border: 3px solid #ffffff;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        .timer-bar-wrapper {
+            height: 14px;
+            background: #e2e8f0;
+            border-radius: 50px;
+            overflow: hidden;
+        }
+
+        .timer-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #22c55e, #84cc16);
+            border-radius: 50px;
+            transition: width 0.2s linear, background 0.3s ease;
+        }
+
+        .timer-bar-fill.warning {
+            background: linear-gradient(90deg, #f59e0b, #f97316);
+        }
+
+        .timer-bar-fill.danger {
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+        }
+
+        .option-btn {
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 1.25rem;
+            padding: 1rem 1.25rem;
+            border: 3px solid #e2e8f0;
+            background: #f8fafc;
+            color: #1e293b;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 0 #cbd5e1;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            background: #eef2ff;
+            border-color: #6366f1;
+            box-shadow: 0 7px 0 #818cf8;
+        }
+
+        .option-btn:active:not(:disabled) {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 #818cf8;
+        }
+
+        .option-btn.correct-choice {
+            background: #dcfce7 !important;
+            border-color: #22c55e !important;
+            color: #15803d !important;
+            box-shadow: 0 4px 0 #22c55e !important;
+        }
+
+        .option-btn.wrong-choice {
+            background: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #b91c1c !important;
+            box-shadow: 0 4px 0 #ef4444 !important;
+        }
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        .memory-tile {
+            aspect-ratio: 1 / 1;
+            border-radius: 18px;
+            font-size: 2.2rem;
+            font-weight: 900;
+            border: none;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #4f46e5;
+            transition: all 0.25s ease;
+        }
+
+        .memory-tile.flipped,
+        .memory-tile.matched {
+            background: #ffffff;
+            border: 3px solid #6366f1;
+            color: #1e293b;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transform: scale(1.03);
+        }
+
+        .memory-tile.matched {
+            border-color: #22c55e;
+            background: #f0fdf4;
+        }
+
+        .matrix-grid {
+            display: grid;
+            gap: 10px;
+            margin: 0 auto;
+        }
+
+        .matrix-cell {
+            aspect-ratio: 1 / 1;
+            border-radius: 16px;
+            border: 3px solid #cbd5e1;
+            background: #f1f5f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .matrix-cell.lit {
+            background: #3b82f6;
+            border-color: #1d4ed8;
+            transform: scale(1.05);
+            box-shadow: 0 0 18px rgba(59, 130, 246, 0.55);
+        }
+
+        .matrix-cell.hit {
+            background: #22c55e;
+            border-color: #15803d;
+        }
+
+        .matrix-cell.miss {
+            background: #ef4444;
+            border-color: #b91c1c;
+        }
+
+        .schulte-grid {
+            display: grid;
+            gap: 10px;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        .schulte-btn {
+            aspect-ratio: 1 / 1;
+            border-radius: 16px;
+            font-weight: 900;
+            font-size: 1.35rem;
+            border: 2px solid #cbd5e1;
+            background: #ffffff;
+            color: #1e293b;
+            box-shadow: 0 4px 0 #cbd5e1;
+            transition: all 0.15s ease;
+        }
+
+        .schulte-btn:hover:not(:disabled) {
+            background: #eff6ff;
+            border-color: #3b82f6;
+        }
+
+        .schulte-btn.done {
+            background: #dcfce7;
+            border-color: #22c55e;
+            color: #15803d;
+            box-shadow: none;
+            opacity: 0.7;
+        }
+
+        .shop-item-card {
+            background: #ffffff;
+            border: 2px solid #f1f5f9;
+            border-radius: 24px;
+            padding: 1.4rem;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .shop-item-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        .shop-item-card.equipped-card {
+            border-color: #22c55e !important;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+        }
+
+        .voucher-ticket {
+            border: 3px dashed #f59e0b;
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border-radius: 24px;
+            padding: 1.75rem;
+            color: #78350f;
+        }
+
+        .result-star {
+            font-size: 2.8rem;
+            color: #e2e8f0;
+            display: inline-block;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .result-star.earned {
+            color: #facc15;
+            filter: drop-shadow(0 4px 10px rgba(250, 204, 21, 0.55));
+            animation: starPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .btn-pill-3d {
+            border-radius: 50px;
+            font-weight: 800;
+            padding: 0.7rem 1.6rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-pill-3d:hover {
+            transform: translateY(-2px);
+        }
+
+        .confetti-piece {
+            position: fixed;
+            width: 11px;
+            height: 11px;
+            top: -20px;
+            z-index: 2000;
+            border-radius: 3px;
+            pointer-events: none;
+            animation: confettiFall 2.8s linear forwards;
+        }
+
+        body.theme-forest {
+            --bg-gradient: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 50%, #fef9c3 100%);
+        }
+
+        body.theme-candy {
+            --bg-gradient: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #e0e7ff 100%);
+        }
+
+        body.theme-space {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+            color: #f8fafc;
+        }
+
+        body.theme-space .top-navbar,
+        body.theme-space .game-select-card,
+        body.theme-space .game-arena-card,
+        body.theme-space .shop-item-card,
+        body.theme-space .modal-content {
+            background: #1e293b !important;
+            color: #f8fafc !important;
+            border-color: #334155 !important;
+        }
+
+        body.theme-space .text-dark {
+            color: #f8fafc !important;
+        }
+
+        body.theme-space .text-secondary,
+        body.theme-space .text-muted {
+            color: #94a3b8 !important;
+        }
+
+        body.theme-space .bg-light {
+            background-color: #0f172a !important;
+            color: #f8fafc !important;
+        }
+
+        body.theme-space .option-btn,
+        body.theme-space .schulte-btn {
+            background: #0f172a;
+            border-color: #475569;
+            color: #f8fafc;
+        }
+
+        body.theme-cyber {
+            --bg-gradient: linear-gradient(135deg, #09090b 0%, #18181b 50%, #2e1065 100%);
+            color: #fafafa;
+        }
+
+        body.theme-cyber .top-navbar,
+        body.theme-cyber .game-select-card,
+        body.theme-cyber .game-arena-card,
+        body.theme-cyber .shop-item-card,
+        body.theme-cyber .modal-content {
+            background: #18181b !important;
+            color: #fafafa !important;
+            border-color: #6d28d9 !important;
+        }
+
+        body.theme-cyber .text-dark {
+            color: #fafafa !important;
+        }
+
+        body.theme-cyber .text-secondary,
+        body.theme-cyber .text-muted {
+            color: #a1a1aa !important;
+        }
+
+        body.theme-cyber .bg-light {
+            background-color: #09090b !important;
+            color: #fafafa !important;
+        }
+
+        body.theme-cyber .option-btn,
+        body.theme-cyber .schulte-btn {
+            background: #09090b;
+            border-color: #7c3aed;
+            color: #fafafa;
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        .shake-anim {
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes starPop {
+            0% { transform: scale(0.2) rotate(-25deg); opacity: 0; }
+            70% { transform: scale(1.25) rotate(8deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.4s ease forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar top-navbar sticky-top px-3 py-2 mb-4">
+        <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <a href="#" class="navbar-brand d-flex align-items-center gap-2 text-decoration-none" onclick="goHome(event)">
+                <span id="navAvatarBadge" class="brand-badge">🧠</span>
+                <div>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="fw-black fs-4 text-dark lh-1">Aql Charxi</span>
+                        <span id="navUserTitle" class="active-title-pill d-none d-sm-inline-block">Boshlovchi</span>
+                    </div>
+                    <small class="text-muted fw-bold" style="font-size: 0.75rem;">O‘yna, Yulduz Yig‘ va Sovg‘a Ol!</small>
+                </div>
+            </a>
+
+            <div class="d-flex align-items-center gap-2 gap-sm-3">
+                <div class="star-counter-pill" title="Yulduzlar balansi">
+                    <span>⭐</span>
+                    <span id="totalStarsDisplay">0</span>
+                </div>
+                <button class="shop-nav-btn" onclick="openShopScreen()">
+                    <span>🎁</span>
+                    <span class="d-none d-md-inline">Sovg‘alar Do‘koni</span>
+                    <span class="d-inline d-md-none">Do‘kon</span>
+                </button>
+                <button id="soundToggleBtn" class="sound-btn" onclick="toggleSound()" title="Ovozni yoqish/o‘chirish">
+                    <i class="bi bi-volume-up-fill"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container pb-5">
+
+        <section id="homeScreen" class="fade-in-up">
+            <div class="text-center mb-5">
+                <span class="badge bg-white text-primary shadow-sm rounded-pill px-3 py-2 mb-2 fw-bold fs-6">
+                    🚀 Aqlni charxlovchi 18 ta interaktiv o‘yin
+                </span>
+                <h1 class="display-5 fw-black text-dark mb-2">Yoshingizni tanlang va o‘yinni boshlang!</h1>
+                <p class="lead text-secondary fw-semibold mx-auto" style="max-width: 640px;">
+                    Topshiriqlarni qanchalik tez va xatosiz bajarsangiz, shuncha ko‘p <strong>5 tagacha yulduz ⭐</strong> olasiz va ularni Do‘konda sovg‘alarga almashtirasiz!
+                </p>
+            </div>
+
+            <div class="row g-4 justify-content-center">
+                <div class="col-12 col-md-4">
+                    <div class="age-card age-card-6-9 text-center" onclick="selectAgeGroup('6-9')">
+                        <div class="age-emoji">🧸</div>
+                        <span class="badge bg-white text-danger rounded-pill px-3 py-1 fw-bold mb-2">Boshlang‘ich daraja</span>
+                        <h2 class="fw-black mb-2">6 – 9 yosh</h2>
+                        <p class="mb-4 opacity-90 fw-semibold">
+                            Quvnoq matematika, ranglar, shakllar, xotira kartalari va mantiqiy ketma-ketliklar!
+                        </p>
+                        <span class="btn btn-light text-danger fw-black rounded-pill px-4 py-2 shadow-sm">
+                            6 ta o‘yinni ochish <i class="bi bi-arrow-right-circle-fill ms-1"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="age-card age-card-9-13 text-center" onclick="selectAgeGroup('9-13')">
+                        <div class="age-emoji">🚀</div>
+                        <span class="badge bg-white text-primary rounded-pill px-3 py-1 fw-bold mb-2">O‘rta daraja</span>
+                        <h2 class="fw-black mb-2">9 – 13 yosh</h2>
+                        <p class="mb-4 opacity-90 fw-semibold">
+                            Tezkor ko‘paytirish, xotira matritsasi, Schulte jadvali, so‘z jumboqlari va tenglamalar!
+                        </p>
+                        <span class="btn btn-light text-primary fw-black rounded-pill px-4 py-2 shadow-sm">
+                            6 ta o‘yinni ochish <i class="bi bi-arrow-right-circle-fill ms-1"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="age-card age-card-13-17 text-center" onclick="selectAgeGroup('13-17')">
+                        <div class="age-emoji">🧠</div>
+                        <span class="badge bg-white text-indigo rounded-pill px-3 py-1 fw-bold mb-2" style="color:#6366f1;">Yuqori daraja</span>
+                        <h2 class="fw-black mb-2">13 – 17 yosh</h2>
+                        <p class="mb-4 opacity-90 fw-semibold">
+                            Algebraik sprint, kripto-kodlash, ko‘z xotirasi 5×5, foizlar va murakkab mantiq!
+                        </p>
+                        <span class="btn btn-light fw-black rounded-pill px-4 py-2 shadow-sm" style="color:#6366f1;">
+                            6 ta o‘yinni ochish <i class="bi bi-arrow-right-circle-fill ms-1"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gamesListScreen" class="d-none fade-in-up">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                <button class="btn btn-white bg-white border shadow-sm rounded-pill px-4 py-2 fw-bold" onclick="goHome()">
+                    <i class="bi bi-arrow-left me-1"></i> Yosh toifalariga qaytish
+                </button>
+                <div class="text-end">
+                    <span id="selectedAgeBadge" class="badge bg-primary rounded-pill px-3 py-2 fs-6 mb-1">6–9 yosh</span>
+                    <h2 id="selectedAgeTitle" class="fw-black mb-0 text-dark">O‘yinni tanlang</h2>
+                </div>
+            </div>
+
+            <div id="gamesGrid" class="row g-4"></div>
+        </section>
+
+        <section id="gamePlayScreen" class="d-none fade-in-up">
+            <div class="d-flex justify-content-between align-items-center mb-3 max-w-780 mx-auto" style="max-width: 780px;">
+                <button class="btn btn-white bg-white border shadow-sm rounded-pill px-3 py-2 fw-bold" onclick="exitCurrentGame()">
+                    <i class="bi bi-grid-fill me-1"></i> O‘yinlar ro‘yxati
+                </button>
+                <span id="roundIndicator" class="badge bg-dark rounded-pill px-3 py-2 fs-6">
+                    Topshiriq: 1 / 5
+                </span>
+            </div>
+
+            <div id="gameArenaCard" class="game-arena-card">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div class="d-flex align-items-center gap-2">
+                        <span id="arenaGameIcon" class="fs-3">🎯</span>
+                        <h4 id="arenaGameTitle" class="fw-black mb-0">O‘yin nomi</h4>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 bg-light px-3 py-1 rounded-pill border">
+                        <i class="bi bi-stopwatch-fill text-danger fs-5"></i>
+                        <span id="timerText" class="fw-black fs-5 text-dark">30.0s</span>
+                    </div>
+                </div>
+
+                <div class="timer-bar-wrapper mb-4">
+                    <div id="timerBarFill" class="timer-bar-fill" style="width: 100%;"></div>
+                </div>
+
+                <div id="gameBoard" class="py-2"></div>
+
+                <div id="gameFeedbackBox" class="text-center mt-3 fw-bold fs-5" style="min-height: 32px;"></div>
+            </div>
+        </section>
+
+        <section id="shopScreen" class="d-none fade-in-up">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                <button class="btn btn-white bg-white border shadow-sm rounded-pill px-4 py-2 fw-bold" onclick="goHome()">
+                    <i class="bi bi-arrow-left me-1"></i> O‘yinlarga qaytish
+                </button>
+                <div class="text-end">
+                    <span class="badge bg-warning text-dark rounded-pill px-3 py-2 fs-6 mb-1 fw-bold">
+                        Balans: <span id="shopBalanceText">0</span> ⭐
+                    </span>
+                    <h2 class="fw-black mb-0 text-dark">🎁 Yulduzlar Do‘koni</h2>
+                </div>
+            </div>
+
+            <ul class="nav nav-pills justify-content-center gap-2 mb-4" id="shopTabs">
+                <li class="nav-item">
+                    <button class="nav-link active rounded-pill fw-bold px-4" onclick="switchShopCategory('avatars', this)">
+                        🦸 Avatarlar va Unvonlar
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link rounded-pill fw-bold px-4" onclick="switchShopCategory('themes', this)">
+                        🎨 Sayt Mavzulari
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link rounded-pill fw-bold px-4" onclick="switchShopCategory('gifts', this)">
+                        🎟️ Sovg‘a Kuponlari va Diplom
+                    </button>
+                </li>
+            </ul>
+
+            <div id="shopItemsGrid" class="row g-4"></div>
+        </section>
+
+    </main>
+
+    <div class="modal fade" id="voucherModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-5 shadow-lg overflow-hidden">
+                <div class="modal-body text-center p-4 p-sm-5">
+                    <div class="voucher-ticket mb-4">
+                        <div class="badge bg-warning text-dark rounded-pill px-3 py-1 fw-bold mb-2">
+                            RASMIY YUTUQ KUPONI
+                        </div>
+                        <div id="voucherIcon" class="display-1 my-2">🍨</div>
+                        <h3 id="voucherTitle" class="fw-black mb-2">Muzqaymoq Kuponi</h3>
+                        <p id="voucherDesc" class="fw-semibold mb-3">
+                            Ushbu kupon egasi aql mashqlarida yulduzlar to‘plab, ota-onasidan sovg‘a olish huquqini qo‘lga kiritdi!
+                        </p>
+                        <div class="small fw-bold opacity-75 border-top border-warning pt-2">
+                            Sana: <span id="voucherDate"></span> • Kod: #<span id="voucherCode">AQL-777</span>
+                        </div>
+                    </div>
+                    <p class="text-muted small fw-semibold mb-3">
+                        📸 Ushbu oynani skrinshot qilib ota-onangizga ko‘rsating!
+                    </p>
+                    <button type="button" class="btn btn-success btn-pill-3d w-100" data-bs-dismiss="modal">
+                        <i class="bi bi-check-circle-fill me-1"></i> Tushunarli, rahmat!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="resultModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-5 shadow-lg overflow-hidden">
+                <div class="modal-body text-center p-4 p-sm-5">
+                    <div id="resultEmoji" class="display-2 mb-2">🏆</div>
+                    <h2 id="resultTitle" class="fw-black mb-1">Ajoyib natija!</h2>
+                    <p id="resultSubtitle" class="text-secondary fw-semibold mb-3">Siz barcha topshiriqlarni bajardingiz!</p>
+
+                    <div id="resultStarsBox" class="my-3 d-flex justify-content-center gap-2">
+                        <span class="result-star" id="rStar1">★</span>
+                        <span class="result-star" id="rStar2">★</span>
+                        <span class="result-star" id="rStar3">★</span>
+                        <span class="result-star" id="rStar4">★</span>
+                        <span class="result-star" id="rStar5">★</span>
+                    </div>
+
+                    <div class="row g-2 my-4">
+                        <div class="col-4">
+                            <div class="bg-light rounded-4 p-2 border">
+                                <div class="small text-muted fw-bold">Vaqt</div>
+                                <div id="statTime" class="fw-black fs-5 text-dark">12.4s</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="bg-light rounded-4 p-2 border">
+                                <div class="small text-muted fw-bold">Aniqlik</div>
+                                <div id="statAccuracy" class="fw-black fs-5 text-success">100%</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="bg-light rounded-4 p-2 border">
+                                <div class="small text-muted fw-bold">Hamyonga</div>
+                                <div id="statStars" class="fw-black fs-5 text-warning">+5 ⭐</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-sm-flex justify-content-center">
+                        <button type="button" class="btn btn-primary btn-pill-3d flex-fill" onclick="restartCurrentGame()">
+                            <i class="bi bi-arrow-clockwise me-1"></i> Qayta o‘ynash
+                        </button>
+                        <button type="button" class="btn btn-warning text-dark btn-pill-3d flex-fill" onclick="goToShopFromResult()">
+                            🎁 Do‘konga o‘tish
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-pill-3d flex-fill" onclick="backToGamesFromResult()">
+                            Boshqa o‘yin
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        class SoundFX {
+            constructor() {
+                this.ctx = null;
+                this.muted = false;
+            }
+
+            init() {
+                if (!this.ctx) {
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    if (AudioCtx) {
+                        this.ctx = new AudioCtx();
+                    }
+                }
+                if (this.ctx && this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+            }
+
+            playTone(freq, type, duration, vol = 0.2, delay = 0) {
+                if (this.muted) return;
+                this.init();
+                if (!this.ctx) return;
+
+                const now = this.ctx.currentTime + delay;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, now);
+
+                gain.gain.setValueAtTime(vol, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+
+                osc.start(now);
+                osc.stop(now + duration);
+            }
+
+            click() {
+                this.playTone(540, 'sine', 0.08, 0.14);
+            }
+
+            correct() {
+                this.playTone(523.25, 'triangle', 0.14, 0.22, 0);
+                this.playTone(659.25, 'triangle', 0.16, 0.22, 0.08);
+                this.playTone(783.99, 'triangle', 0.24, 0.24, 0.16);
+            }
+
+            wrong() {
+                this.playTone(230, 'sawtooth', 0.18, 0.18, 0);
+                this.playTone(175, 'sawtooth', 0.26, 0.18, 0.12);
+            }
+
+            tick() {
+                this.playTone(880, 'sine', 0.04, 0.07);
+            }
+
+            fanfare() {
+                const melody = [523.25, 659.25, 783.99, 1046.50];
+                melody.forEach((f, idx) => {
+                    this.playTone(f, 'triangle', 0.25, 0.22, idx * 0.1);
+                });
+            }
+
+            cashRegister() {
+                this.playTone(987.77, 'sine', 0.12, 0.22, 0);
+                this.playTone(1318.51, 'triangle', 0.35, 0.25, 0.09);
+            }
+        }
+
+        const sfx = new SoundFX();
+
+        function toggleSound() {
+            sfx.muted = !sfx.muted;
+            const btn = document.getElementById('soundToggleBtn');
+            if (sfx.muted) {
+                btn.classList.add('muted');
+                btn.innerHTML = '<i class="bi bi-volume-mute-fill"></i>';
+            } else {
+                btn.classList.remove('muted');
+                btn.innerHTML = '<i class="bi bi-volume-up-fill"></i>';
+                sfx.click();
+            }
+        }
+
+        const GAMES_CATALOG = {
+            '6-9': {
+                label: '6 – 9 yosh',
+                badgeClass: 'bg-danger',
+                games: [
+                    { id: 'k_math', title: 'Quvnoq Matematika', desc: 'Qo‘shish va ayirish misollarini tez yech!', icon: '➕', bg: '#ffe4e6', timeLimit: 35, rounds: 5, type: 'quiz_math_easy' },
+                    { id: 'k_color', title: 'Ranglar O‘yini', desc: 'So‘zning yozilgan rangini top (Stroop testi)!', icon: '🎨', bg: '#fef3c7', timeLimit: 30, rounds: 5, type: 'stroop' },
+                    { id: 'k_memory', title: 'Xotira Kartalari', desc: 'Bir xil hayvonchalar juftini top!', icon: '🐼', bg: '#dcfce7', timeLimit: 40, rounds: 1, type: 'memory_cards' },
+                    { id: 'k_compare', title: 'Katta yoki Kichik?', desc: 'Qaysi son yoki ifoda kattaroq ekanini tanla!', icon: '⚖️', bg: '#e0f2fe', timeLimit: 30, rounds: 5, type: 'compare_easy' },
+                    { id: 'k_seq', title: 'Ketma-ketlikni Top', desc: 'Tushib qolgan sonni topib joyiga qo‘y!', icon: '🔢', bg: '#f3e8ff', timeLimit: 35, rounds: 5, type: 'sequence_easy' },
+                    { id: 'k_count', title: 'Shakllarni Sana', desc: 'Ekranda nechta bir xil meva borligini sana!', icon: '🍓', bg: '#ffedd5', timeLimit: 30, rounds: 5, type: 'count_items' }
+                ]
+            },
+            '9-13': {
+                label: '9 – 13 yosh',
+                badgeClass: 'bg-primary',
+                games: [
+                    { id: 'm_mult', title: 'Tezkor Ko‘paytirish', desc: 'Karra jadvali va bo‘lish bo‘yicha sprint!', icon: '✖️', bg: '#dbeafe', timeLimit: 35, rounds: 6, type: 'quiz_math_med' },
+                    { id: 'm_eq', title: 'Mantiqiy Tenglama', desc: 'Noma’lum X soni nechaga teng?', icon: '🧩', bg: '#fef9c3', timeLimit: 40, rounds: 5, type: 'equation_med' },
+                    { id: 'm_matrix', title: 'Xotira Matritsasi', desc: 'Yongan kataklarni eslab qol va belgilab chiq!', icon: '🟦', bg: '#e0e7ff', timeLimit: 45, rounds: 4, type: 'matrix_mem', size: 4, count: 5 },
+                    { id: 'm_schulte', title: 'Schulte Jadvali (1–16)', desc: '1 dan 16 gacha sonlarni tartib bilan tez bos!', icon: '⚡', bg: '#dcfce7', timeLimit: 35, rounds: 1, type: 'schulte', maxNum: 16 },
+                    { id: 'm_anagram', title: 'So‘z Jumboq', desc: 'Aralash harflardan to‘g‘ri so‘z tuz!', icon: '🔤', bg: '#fce7f3', timeLimit: 45, rounds: 5, type: 'anagram' },
+                    { id: 'm_roman', title: 'Rim Raqamlari', desc: 'Rim raqamlarini oddiy sonlarga aylantir!', icon: '🏛️', bg: '#ffedd5', timeLimit: 35, rounds: 5, type: 'roman_num' }
+                ]
+            },
+            '13-17': {
+                label: '13 – 17 yosh',
+                badgeClass: 'bg-dark',
+                games: [
+                    { id: 't_alg', title: 'Algebraik Sprint', desc: 'Darajalar, ildizlar va murakkab misollar!', icon: '📐', bg: '#ede9fe', timeLimit: 45, rounds: 6, type: 'quiz_math_hard' },
+                    { id: 't_cipher', title: 'Kripto-Kodlash', desc: 'Shifrlangan maxfiy so‘zni kalit orqali och!', icon: '🔐', bg: '#dbeafe', timeLimit: 50, rounds: 5, type: 'cipher' },
+                    { id: 't_matrix', title: 'Ko‘z Xotirasi (5×5)', desc: '5×5 katakdagi 7 ta yongan nuqtani eslab qol!', icon: '👁️', bg: '#fae8ff', timeLimit: 50, rounds: 4, type: 'matrix_mem', size: 5, count: 7 },
+                    { id: 't_schulte', title: 'Tezkor Schulte (1–25)', desc: '1 dan 25 gacha sonlarni rekord vaqtda top!', icon: '🔥', bg: '#fee2e2', timeLimit: 45, rounds: 1, type: 'schulte', maxNum: 25 },
+                    { id: 't_percent', title: 'Foiz va Kasrlar', desc: 'Sonning foizini tez va aniq hisobla!', icon: '📊', bg: '#dcfce7', timeLimit: 40, rounds: 5, type: 'percent_hard' },
+                    { id: 't_logic', title: 'Mantiqiy Ketma-ketlik', desc: 'Murakkab progressiya qonuniyatini top!', icon: '🧬', bg: '#fef3c7', timeLimit: 45, rounds: 5, type: 'sequence_hard' }
+                ]
+            }
+        };
+
+        const SHOP_ITEMS = [
+            { id: 'av_owl', category: 'avatars', title: 'Yosh Daho', icon: '🦉', price: 10, desc: 'Donishmand boyo‘g‘li avatari va "Yosh Daho" unvoni.' },
+            { id: 'av_astro', category: 'avatars', title: 'Koinot Sayyohi', icon: '🚀', price: 20, desc: 'Yulduzlar sari uchuvchi kosmonavt unvoni.' },
+            { id: 'av_robot', category: 'avatars', title: 'Super Aql', icon: '🤖', price: 35, desc: 'Temir mantiq va tezkor hisob-kitob ustasi!' },
+            { id: 'av_gamer', category: 'avatars', title: 'Kibersportchi', icon: '🎮', price: 50, desc: 'Eng chaqqon reaksiya va diqqat chempioni.' },
+            { id: 'av_king', category: 'avatars', title: 'Oltin Qirol / Malika', icon: '👑', price: 80, desc: 'Aql Charxi saroyining oliy unvoni va toji!' },
+
+            { id: 'th_default', category: 'themes', themeClass: '', title: 'Quyoshli Kun (Standart)', icon: '☀️', price: 0, desc: 'Yorqin va quvnoq kunduzgi klassik dizayn.' },
+            { id: 'th_forest', category: 'themes', themeClass: 'theme-forest', title: 'Sehrli O‘rmon', icon: '🌿', price: 15, desc: 'Ko‘zni charchatmaydigan yashil tabiat mavzusi.' },
+            { id: 'th_candy', category: 'themes', themeClass: 'theme-candy', title: 'Konfetlar Dunyosi', icon: '🍭', price: 25, desc: 'Shirin pushti va binafsha ranglar uyg‘unligi.' },
+            { id: 'th_space', category: 'themes', themeClass: 'theme-space', title: 'Kosmos Tuni', icon: '🌌', price: 40, desc: 'Sirli tungi osmon va yulduzlar olami (Dark Mode).' },
+            { id: 'th_cyber', category: 'themes', themeClass: 'theme-cyber', title: 'Kiberpunk Neon', icon: '⚡', price: 65, desc: 'Kelajak texnologiyalari uslubidagi neon dizayn!' },
+
+            { id: 'gf_time', category: 'gifts', title: '+1 Soat O‘yin Vaqti', icon: '⏰', price: 30, desc: 'Ota-onadan qo‘shimcha 1 soat sevimli mashg‘ulot uchun ruxsat kuponi!' },
+            { id: 'gf_icecream', category: 'gifts', title: 'Muzqaymoq Kuponi', icon: '🍨', price: 45, desc: 'O‘z mehnatingiz bilan yutib olingan shirin muzqaymoq chiptasi!' },
+            { id: 'gf_cinema', category: 'gifts', title: 'Kino Kechasi Chiptasi', icon: '🎬', price: 70, desc: 'Oila davrasida o‘zingiz tanlagan multfilm yoki kino tomoshasi!' },
+            { id: 'gf_diploma', category: 'gifts', title: 'Chempion Diplomi', icon: '🏆', price: 100, desc: '"Aql Charxi Mutlaq Chempioni" rasmiy faxriy sertifikati!' }
+        ];
+
+        let currentAgeKey = null;
+        let currentGameConfig = null;
+        let gameTimerInterval = null;
+        let gameStartTime = 0;
+        let timeRemaining = 0;
+        let currentRound = 1;
+        let totalRounds = 5;
+        let correctAnswers = 0;
+        let wrongAttempts = 0;
+        let isInputLocked = false;
+        let resultModalInstance = null;
+        let voucherModalInstance = null;
+        let activeShopCategory = 'avatars';
+
+        let savedStars = JSON.parse(localStorage.getItem('aql_charxi_stars') || '{}');
+        let shopState = JSON.parse(localStorage.getItem('aql_charxi_shop') || 'null');
+
+        if (!shopState) {
+            const initialEarned = Object.values(savedStars).reduce((a, b) => a + b, 0);
+            shopState = {
+                balance: initialEarned,
+                owned: ['th_default'],
+                equippedAvatar: null,
+                equippedTheme: 'th_default'
+            };
+            localStorage.setItem('aql_charxi_shop', JSON.stringify(shopState));
+        }
+
+        function persistShopState() {
+            localStorage.setItem('aql_charxi_shop', JSON.stringify(shopState));
+            updateTotalStarsUI();
+            applyEquippedCosmetics();
+        }
+
+        function updateTotalStarsUI() {
+            document.getElementById('totalStarsDisplay').textContent = shopState.balance;
+            const shopBalEl = document.getElementById('shopBalanceText');
+            if (shopBalEl) {
+                shopBalEl.textContent = shopState.balance;
+            }
+        }
+
+        function applyEquippedCosmetics() {
+            const avBadge = document.getElementById('navAvatarBadge');
+            const titlePill = document.getElementById('navUserTitle');
+            if (shopState.equippedAvatar) {
+                const avItem = SHOP_ITEMS.find(i => i.id === shopState.equippedAvatar);
+                if (avItem) {
+                    avBadge.textContent = avItem.icon;
+                    titlePill.textContent = avItem.title;
+                }
+            } else {
+                avBadge.textContent = '🧠';
+                titlePill.textContent = 'Boshlovchi';
+            }
+
+            document.body.classList.remove('theme-space', 'theme-forest', 'theme-candy', 'theme-cyber');
+            const thItem = SHOP_ITEMS.find(i => i.id === shopState.equippedTheme);
+            if (thItem && thItem.themeClass) {
+                document.body.classList.add(thItem.themeClass);
+            }
+        }
+
+        function saveGameStars(gameId, stars) {
+            const prev = savedStars[gameId] || 0;
+            let earnedToWallet = stars;
+            if (stars > prev) {
+                savedStars[gameId] = stars;
+                localStorage.setItem('aql_charxi_stars', JSON.stringify(savedStars));
+                if (prev > 0) {
+                    earnedToWallet += 2;
+                }
+            }
+            shopState.balance += earnedToWallet;
+            persistShopState();
+            return earnedToWallet;
+        }
+
+        function showScreen(screenId) {
+            ['homeScreen', 'gamesListScreen', 'gamePlayScreen', 'shopScreen'].forEach(id => {
+                document.getElementById(id).classList.add('d-none');
+            });
+            const target = document.getElementById(screenId);
+            target.classList.remove('d-none');
+            target.classList.remove('fade-in-up');
+            void target.offsetWidth;
+            target.classList.add('fade-in-up');
+        }
+
+        function goHome(e) {
+            if (e) e.preventDefault();
+            sfx.click();
+            stopTimer();
+            showScreen('homeScreen');
+        }
+
+        function selectAgeGroup(ageKey) {
+            sfx.click();
+            currentAgeKey = ageKey;
+            const group = GAMES_CATALOG[ageKey];
+
+            const badge = document.getElementById('selectedAgeBadge');
+            badge.className = 'badge rounded-pill px-3 py-2 fs-6 mb-1 ' + group.badgeClass;
+            badge.textContent = group.label;
+            document.getElementById('selectedAgeTitle').textContent = 'O‘yinni tanlang (6 ta o‘yin)';
+
+            const grid = document.getElementById('gamesGrid');
+            grid.innerHTML = '';
+
+            group.games.forEach(game => {
+                const bestStars = savedStars[game.id] || 0;
+                let starsHtml = '';
+                for (let i = 1; i <= 5; i++) {
+                    starsHtml += `<span class="${i <= bestStars ? 'text-warning' : 'text-secondary opacity-25'}">★</span>`;
+                }
+
+                const col = document.createElement('div');
+                col.className = 'col-12 col-sm-6 col-lg-4';
+                col.innerHTML = `
+                    <div class="game-select-card" onclick="launchGame('${ageKey}', '${game.id}')">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="game-icon-box" style="background:${game.bg};">${game.icon}</div>
+                                <div class="fs-5 fw-bold" title="Eng yaxshi natija">${starsHtml}</div>
+                            </div>
+                            <h4 class="fw-black text-dark mb-1">${game.title}</h4>
+                            <p class="text-secondary small fw-semibold mb-3">${game.desc}</p>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                            <span class="small fw-bold text-muted"><i class="bi bi-clock me-1"></i>${game.timeLimit} soniya</span>
+                            <span class="btn btn-sm btn-primary rounded-pill px-3 fw-bold">O‘ynash ▶</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(col);
+            });
+
+            showScreen('gamesListScreen');
+        }
+
+        function exitCurrentGame() {
+            sfx.click();
+            stopTimer();
+            if (currentAgeKey) {
+                selectAgeGroup(currentAgeKey);
+            } else {
+                goHome();
+            }
+        }
+
+        function openShopScreen() {
+            sfx.click();
+            stopTimer();
+            updateTotalStarsUI();
+            renderShopItems();
+            showScreen('shopScreen');
+        }
+
+        function switchShopCategory(cat, btnEl) {
+            sfx.click();
+            activeShopCategory = cat;
+            document.querySelectorAll('#shopTabs .nav-link').forEach(b => b.classList.remove('active'));
+            btnEl.classList.add('active');
+            renderShopItems();
+        }
+
+        function renderShopItems() {
+            const grid = document.getElementById('shopItemsGrid');
+            grid.innerHTML = '';
+
+            const items = SHOP_ITEMS.filter(item => item.category === activeShopCategory);
+            items.forEach(item => {
+                const isOwned = shopState.owned.includes(item.id);
+                const isEquipped =
+                    (item.category === 'avatars' && shopState.equippedAvatar === item.id) ||
+                    (item.category === 'themes' && shopState.equippedTheme === item.id);
+                const canAfford = shopState.balance >= item.price;
+                const missing = item.price - shopState.balance;
+
+                let actionBtnHtml = '';
+                if (item.category === 'gifts') {
+                    if (canAfford) {
+                        actionBtnHtml = `
+                            <button class="btn btn-warning text-dark fw-black rounded-pill w-100 shadow-sm" onclick="buyShopItem('${item.id}')">
+                                🎁 Sotib olish (${item.price} ⭐)
+                            </button>`;
+                    } else {
+                        actionBtnHtml = `
+                            <button class="btn btn-light border text-muted fw-bold rounded-pill w-100" disabled>
+                                Yana ${missing} ⭐ kerak
+                            </button>`;
+                    }
+                } else if (isEquipped) {
+                    actionBtnHtml = `
+                        <button class="btn btn-success fw-bold rounded-pill w-100" disabled>
+                            <i class="bi bi-check-circle-fill me-1"></i> Faol (Tanlangan)
+                        </button>`;
+                } else if (isOwned) {
+                    actionBtnHtml = `
+                        <button class="btn btn-outline-primary fw-bold rounded-pill w-100" onclick="equipShopItem('${item.id}')">
+                            ✨ Kiyish / Qo‘llash
+                        </button>`;
+                } else if (canAfford) {
+                    actionBtnHtml = `
+                        <button class="btn btn-primary fw-bold rounded-pill w-100 shadow-sm" onclick="buyShopItem('${item.id}')">
+                            Sotib olish — ${item.price} ⭐
+                        </button>`;
+                } else {
+                    actionBtnHtml = `
+                        <button class="btn btn-light border text-muted fw-bold rounded-pill w-100" disabled>
+                            🔒 Yana ${missing} ⭐ kerak
+                        </button>`;
+                }
+
+                const col = document.createElement('div');
+                col.className = 'col-12 col-sm-6 col-lg-4';
+                col.innerHTML = `
+                    <div class="shop-item-card ${isEquipped ? 'equipped-card' : ''}">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="display-4">${item.icon}</span>
+                                <span class="badge ${item.price === 0 ? 'bg-success-subtle text-success' : 'bg-warning-subtle text-dark'} rounded-pill px-3 py-2 fw-black fs-6">
+                                    ${item.price === 0 ? 'Bepul' : item.price + ' ⭐'}
+                                </span>
+                            </div>
+                            <h4 class="fw-black text-dark mb-2">${item.title}</h4>
+                            <p class="text-secondary small fw-semibold mb-4">${item.desc}</p>
+                        </div>
+                        <div>${actionBtnHtml}</div>
+                    </div>
+                `;
+                grid.appendChild(col);
+            });
+        }
+
+        function buyShopItem(itemId) {
+            const item = SHOP_ITEMS.find(i => i.id === itemId);
+            if (!item || shopState.balance < item.price) return;
+
+            shopState.balance -= item.price;
+            sfx.cashRegister();
+            launchConfetti();
+
+            if (item.category === 'gifts') {
+                persistShopState();
+                renderShopItems();
+                openVoucherModal(item);
+            } else {
+                if (!shopState.owned.includes(item.id)) {
+                    shopState.owned.push(item.id);
+                }
+                if (item.category === 'avatars') shopState.equippedAvatar = item.id;
+                if (item.category === 'themes') shopState.equippedTheme = item.id;
+                persistShopState();
+                renderShopItems();
+            }
+        }
+
+        function equipShopItem(itemId) {
+            const item = SHOP_ITEMS.find(i => i.id === itemId);
+            if (!item || !shopState.owned.includes(item.id)) return;
+
+            sfx.click();
+            if (item.category === 'avatars') shopState.equippedAvatar = item.id;
+            if (item.category === 'themes') shopState.equippedTheme = item.id;
+            persistShopState();
+            renderShopItems();
+        }
+
+        function openVoucherModal(item) {
+            document.getElementById('voucherIcon').textContent = item.icon;
+            document.getElementById('voucherTitle').textContent = item.title;
+            document.getElementById('voucherDesc').textContent = item.desc;
+            document.getElementById('voucherDate').textContent = new Date().toLocaleDateString('uz-UZ');
+            document.getElementById('voucherCode').textContent = 'AQL-' + randInt(100, 999);
+
+            if (!voucherModalInstance) {
+                voucherModalInstance = new bootstrap.Modal(document.getElementById('voucherModal'));
+            }
+            voucherModalInstance.show();
+        }
+
+        function randInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function shuffle(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        function launchGame(ageKey, gameId) {
+            sfx.click();
+            const group = GAMES_CATALOG[ageKey];
+            currentGameConfig = group.games.find(g => g.id === gameId);
+            if (!currentGameConfig) return;
+
+            currentRound = 1;
+            totalRounds = currentGameConfig.rounds;
+            correctAnswers = 0;
+            wrongAttempts = 0;
+            isInputLocked = false;
+
+            document.getElementById('arenaGameIcon').textContent = currentGameConfig.icon;
+            document.getElementById('arenaGameTitle').textContent = currentGameConfig.title;
+            document.getElementById('gameFeedbackBox').textContent = '';
+
+            showScreen('gamePlayScreen');
+            startTimer(currentGameConfig.timeLimit);
+            renderCurrentRound();
+        }
+
+        function startTimer(limitSeconds) {
+            stopTimer();
+            timeRemaining = limitSeconds;
+            gameStartTime = performance.now();
+            let lastWholeSec = Math.ceil(timeRemaining);
+
+            updateTimerUI(limitSeconds);
+
+            gameTimerInterval = setInterval(() => {
+                timeRemaining -= 0.1;
+                if (timeRemaining <= 0) {
+                    timeRemaining = 0;
+                    updateTimerUI(limitSeconds);
+                    stopTimer();
+                    finishGame(true);
+                    return;
+                }
+
+                const currentWhole = Math.ceil(timeRemaining);
+                if (currentWhole <= 5 && currentWhole < lastWholeSec) {
+                    sfx.tick();
+                }
+                lastWholeSec = currentWhole;
+                updateTimerUI(limitSeconds);
+            }, 100);
+        }
+
+        function updateTimerUI(limitSeconds) {
+            const pct = Math.max(0, (timeRemaining / limitSeconds) * 100);
+            const bar = document.getElementById('timerBarFill');
+            document.getElementById('timerText').textContent = timeRemaining.toFixed(1) + 's';
+            bar.style.width = pct + '%';
+
+            bar.classList.remove('warning', 'danger');
+            if (pct < 25) {
+                bar.classList.add('danger');
+            } else if (pct < 55) {
+                bar.classList.add('warning');
+            }
+        }
+
+        function stopTimer() {
+            if (gameTimerInterval) {
+                clearInterval(gameTimerInterval);
+                gameTimerInterval = null;
+            }
+        }
+
+        function setFeedback(text, isGood) {
+            const box = document.getElementById('gameFeedbackBox');
+            box.textContent = text;
+            box.className = 'text-center mt-3 fw-bold fs-5 ' + (isGood ? 'text-success' : 'text-danger');
+        }
+
+        function triggerArenaShake() {
+            const card = document.getElementById('gameArenaCard');
+            card.classList.remove('shake-anim');
+            void card.offsetWidth;
+            card.classList.add('shake-anim');
+        }
+
+        function advanceRound() {
+            if (currentRound < totalRounds) {
+                currentRound++;
+                isInputLocked = false;
+                setFeedback('', true);
+                renderCurrentRound();
+            } else {
+                stopTimer();
+                finishGame(false);
+            }
+        }
+
+        function renderCurrentRound() {
+            const indicator = document.getElementById('roundIndicator');
+            if (totalRounds > 1) {
+                indicator.textContent = `Topshiriq: ${currentRound} / ${totalRounds}`;
+            } else {
+                indicator.textContent = `Bosqich: 1 / 1`;
+            }
+
+            const board = document.getElementById('gameBoard');
+            const type = currentGameConfig.type;
+
+            if (type === 'quiz_math_easy') renderQuizMathEasy(board);
+            else if (type === 'stroop') renderStroopGame(board);
+            else if (type === 'memory_cards') renderMemoryCardsGame(board);
+            else if (type === 'compare_easy') renderCompareGame(board);
+            else if (type === 'sequence_easy') renderSequenceEasy(board);
+            else if (type === 'count_items') renderCountItemsGame(board);
+            else if (type === 'quiz_math_med') renderQuizMathMed(board);
+            else if (type === 'equation_med') renderEquationMed(board);
+            else if (type === 'matrix_mem') renderMatrixMemoryGame(board);
+            else if (type === 'schulte') renderSchulteGame(board);
+            else if (type === 'anagram') renderAnagramGame(board);
+            else if (type === 'roman_num') renderRomanGame(board);
+            else if (type === 'quiz_math_hard') renderQuizMathHard(board);
+            else if (type === 'cipher') renderCipherGame(board);
+            else if (type === 'percent_hard') renderPercentGame(board);
+            else if (type === 'sequence_hard') renderSequenceHard(board);
+        }
+
+        function renderChoiceQuestion(board, promptHtml, options, correctVal) {
+            const shuffled = shuffle(options);
+            board.innerHTML = `
+                <div class="text-center mb-4">
+                    <div class="display-5 fw-black text-dark my-3">${promptHtml}</div>
+                </div>
+                <div class="row g-3 justify-content-center">
+                    ${shuffled.map(opt => `
+                        <div class="col-6 col-sm-6">
+                            <button class="btn option-btn w-100" data-val="${opt}">${opt}</button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            board.querySelectorAll('.option-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (isInputLocked) return;
+                    const chosen = btn.getAttribute('data-val');
+                    if (String(chosen) === String(correctVal)) {
+                        isInputLocked = true;
+                        btn.classList.add('correct-choice');
+                        sfx.correct();
+                        correctAnswers++;
+                        setFeedback('Barakalla! To‘g‘ri javob! 🎉', true);
+                        setTimeout(advanceRound, 450);
+                    } else {
+                        btn.classList.add('wrong-choice');
+                        btn.disabled = true;
+                        sfx.wrong();
+                        wrongAttempts++;
+                        triggerArenaShake();
+                        setFeedback('Xato! Qayta urinib ko‘ring 💡', false);
+                    }
+                });
+            });
+        }
+
+        function generateNumericOptions(ans, spread = 6) {
+            const set = new Set([ans]);
+            while (set.size < 4) {
+                const candidate = ans + randInt(-spread, spread);
+                if (candidate >= 0 && candidate !== ans) {
+                    set.add(candidate);
+                }
+            }
+            return Array.from(set);
+        }
+
+        function renderQuizMathEasy(board) {
+            const isAdd = Math.random() > 0.4;
+            let a, b, ans, prompt;
+            if (isAdd) {
+                a = randInt(2, 18);
+                b = randInt(2, 15);
+                ans = a + b;
+                prompt = `${a} + ${b} = ?`;
+            } else {
+                a = randInt(8, 25);
+                b = randInt(1, a - 1);
+                ans = a - b;
+                prompt = `${a} − ${b} = ?`;
+            }
+            renderChoiceQuestion(board, prompt, generateNumericOptions(ans, 5), ans);
+        }
+
+        function renderStroopGame(board) {
+            const colors = [
+                { name: 'QIZIL', hex: '#ef4444' },
+                { name: 'KO‘K', hex: '#3b82f6' },
+                { name: 'YASHIL', hex: '#22c55e' },
+                { name: 'SARIQ', hex: '#eab308' },
+                { name: 'BINAFSHA', hex: '#a855f7' }
+            ];
+            const wordObj = colors[randInt(0, colors.length - 1)];
+            let inkObj = colors[randInt(0, colors.length - 1)];
+            while (inkObj.name === wordObj.name) {
+                inkObj = colors[randInt(0, colors.length - 1)];
+            }
+
+            const promptHtml = `
+                <div class="fs-5 text-secondary fw-bold mb-2">So‘z QAYSI RANGDA yozilgan?</div>
+                <span style="color: ${inkObj.hex}; letter-spacing: 2px;">${wordObj.name}</span>
+            `;
+            const opts = shuffle(colors.map(c => c.name)).slice(0, 4);
+            if (!opts.includes(inkObj.name)) {
+                opts[0] = inkObj.name;
+            }
+            renderChoiceQuestion(board, promptHtml, opts, inkObj.name);
+        }
+
+        function renderMemoryCardsGame(board) {
+            const emojis = ['🐶', '🐱', '🦊', '🦁', '🐸', '🐵'];
+            const deck = shuffle([...emojis, ...emojis]);
+            let flipped = [];
+            let matchedCount = 0;
+
+            board.innerHTML = `
+                <p class="text-center text-secondary fw-bold mb-3">Barcha 6 ta juftlikni oching!</p>
+                <div class="memory-grid">
+                    ${deck.map((em, idx) => `
+                        <button class="memory-tile" data-idx="${idx}" data-emoji="${em}">❓</button>
+                    `).join('')}
+                </div>
+            `;
+
+            const tiles = board.querySelectorAll('.memory-tile');
+            tiles.forEach(tile => {
+                tile.addEventListener('click', () => {
+                    if (isInputLocked || tile.classList.contains('flipped') || tile.classList.contains('matched')) return;
+
+                    sfx.click();
+                    tile.classList.add('flipped');
+                    tile.textContent = tile.getAttribute('data-emoji');
+                    flipped.push(tile);
+
+                    if (flipped.length === 2) {
+                        isInputLocked = true;
+                        const [t1, t2] = flipped;
+                        if (t1.getAttribute('data-emoji') === t2.getAttribute('data-emoji')) {
+                            sfx.correct();
+                            t1.classList.add('matched');
+                            t2.classList.add('matched');
+                            matchedCount++;
+                            correctAnswers++;
+                            flipped = [];
+                            isInputLocked = false;
+                            if (matchedCount === emojis.length) {
+                                setFeedback('Barcha juftliklar topildi! 🏆', true);
+                                setTimeout(advanceRound, 500);
+                            }
+                        } else {
+                            wrongAttempts++;
+                            setTimeout(() => {
+                                t1.classList.remove('flipped');
+                                t2.classList.remove('flipped');
+                                t1.textContent = '❓';
+                                t2.textContent = '❓';
+                                flipped = [];
+                                isInputLocked = false;
+                            }, 550);
+                        }
+                    }
+                });
+            });
+        }
+
+        function renderCompareGame(board) {
+            const a = randInt(5, 35);
+            let b = randInt(5, 35);
+            if (Math.random() < 0.25) b = a;
+            const ans = a > b ? '>' : (a < b ? '<' : '=');
+
+            const promptHtml = `${a} &nbsp; <span class="badge bg-warning text-dark">?</span> &nbsp; ${b}`;
+            board.innerHTML = `
+                <div class="text-center mb-4">
+                    <div class="display-4 fw-black text-dark my-3">${promptHtml}</div>
+                </div>
+                <div class="row g-3 justify-content-center">
+                    ${['>', '<', '='].map(sym => `
+                        <div class="col-4">
+                            <button class="btn option-btn w-100 fs-2" data-val="${sym}">${sym}</button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            board.querySelectorAll('.option-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (isInputLocked) return;
+                    if (btn.getAttribute('data-val') === ans) {
+                        isInputLocked = true;
+                        btn.classList.add('correct-choice');
+                        sfx.correct();
+                        correctAnswers++;
+                        setFeedback('To‘g‘ri belgi! ⭐', true);
+                        setTimeout(advanceRound, 400);
+                    } else {
+                        btn.classList.add('wrong-choice');
+                        btn.disabled = true;
+                        sfx.wrong();
+                        wrongAttempts++;
+                        triggerArenaShake();
+                    }
+                });
+            });
+        }
+
+        function renderSequenceEasy(board) {
+            const step = randInt(2, 5);
+            const start = randInt(1, 10);
+            const seq = [start, start + step, start + step * 2, start + step * 3];
+            const ans = start + step * 4;
+            const promptHtml = `${seq.join(' , ')} , <span class="text-primary">?</span>`;
+            renderChoiceQuestion(board, promptHtml, generateNumericOptions(ans, 6), ans);
+        }
+
+        function renderCountItemsGame(board) {
+            const fruits = ['🍎', '🍌', '🍇', '🍊', '🍓'];
+            const targetFruit = fruits[randInt(0, fruits.length - 1)];
+            const targetCount = randInt(4, 9);
+            const items = Array(targetCount).fill(targetFruit);
+
+            while (items.length < 14) {
+                const other = fruits[randInt(0, fruits.length - 1)];
+                if (other !== targetFruit) items.push(other);
+            }
+            const mixed = shuffle(items);
+
+            const promptHtml = `
+                <div class="fs-5 text-secondary fw-bold mb-2">Nechta <span class="fs-2">${targetFruit}</span> bor?</div>
+                <div class="bg-light rounded-4 p-3 border fs-2" style="letter-spacing: 6px;">${mixed.join(' ')}</div>
+            `;
+            renderChoiceQuestion(board, promptHtml, generateNumericOptions(targetCount, 3), targetCount);
+        }
+
+        function renderQuizMathMed(board) {
+            const isMult = Math.random() > 0.35;
+            let a, b, ans, prompt;
+            if (isMult) {
+                a = randInt(4, 14);
+                b = randInt(3, 12);
+                ans = a * b;
+                prompt = `${a} × ${b} = ?`;
+            } else {
+                b = randInt(3, 12);
+                ans = randInt(4, 15);
+                a = b * ans;
+                prompt = `${a} ÷ ${b} = ?`;
+            }
+            renderChoiceQuestion(board, prompt, generateNumericOptions(ans, 10), ans);
+        }
+
+        function renderEquationMed(board) {
+            const x = randInt(3, 18);
+            const a = randInt(2, 6);
+            const b = randInt(4, 20);
+            const total = a * x + b;
+            const prompt = `${a} · X + ${b} = ${total} <div class="fs-4 text-primary mt-2">X = ?</div>`;
+            renderChoiceQuestion(board, prompt, generateNumericOptions(x, 5), x);
+        }
+
+        function renderMatrixMemoryGame(board) {
+            const size = currentGameConfig.size || 4;
+            const targetCount = currentGameConfig.count || 5;
+            const totalCells = size * size;
+            const chosenIndices = new Set();
+
+            while (chosenIndices.size < targetCount) {
+                chosenIndices.add(randInt(0, totalCells - 1));
+            }
+
+            isInputLocked = true;
+            setFeedback('Ko‘k kataklarni eslab qoling! 👀', true);
+
+            board.innerHTML = `
+                <div class="matrix-grid" style="grid-template-columns: repeat(${size}, 1fr); max-width: ${size * 72}px;">
+                    ${Array.from({ length: totalCells }).map((_, idx) => `
+                        <div class="matrix-cell ${chosenIndices.has(idx) ? 'lit' : ''}" data-idx="${idx}"></div>
+                    `).join('')}
+                </div>
+            `;
+
+            const cells = board.querySelectorAll('.matrix-cell');
+            let found = 0;
+
+            setTimeout(() => {
+                cells.forEach(c => c.classList.remove('lit'));
+                isInputLocked = false;
+                setFeedback('Endi o‘sha kataklarni bosing! 🎯', true);
+
+                cells.forEach(cell => {
+                    cell.addEventListener('click', () => {
+                        if (isInputLocked || cell.classList.contains('hit') || cell.classList.contains('miss')) return;
+                        const idx = Number(cell.getAttribute('data-idx'));
+
+                        if (chosenIndices.has(idx)) {
+                            sfx.correct();
+                            cell.classList.add('hit');
+                            found++;
+                            correctAnswers++;
+                            if (found === targetCount) {
+                                isInputLocked = true;
+                                setFeedback('Ajoyib xotira! 🌟', true);
+                                setTimeout(advanceRound, 500);
+                            }
+                        } else {
+                            sfx.wrong();
+                            cell.classList.add('miss');
+                            wrongAttempts++;
+                            triggerArenaShake();
+                        }
+                    });
+                });
+            }, 1450);
+        }
+
+        function renderSchulteGame(board) {
+            const maxNum = currentGameConfig.maxNum || 16;
+            const cols = Math.sqrt(maxNum);
+            const nums = shuffle(Array.from({ length: maxNum }, (_, i) => i + 1));
+            let nextExpected = 1;
+
+            board.innerHTML = `
+                <div class="text-center mb-3">
+                    <span class="badge bg-primary fs-6 px-3 py-2 rounded-pill">
+                        Keyingi son: <strong id="schulteTargetNum" class="fs-5">1</strong>
+                    </span>
+                </div>
+                <div class="schulte-grid" style="grid-template-columns: repeat(${cols}, 1fr);">
+                    ${nums.map(n => `<button class="schulte-btn" data-num="${n}">${n}</button>`).join('')}
+                </div>
+            `;
+
+            board.querySelectorAll('.schulte-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const num = Number(btn.getAttribute('data-num'));
+                    if (num === nextExpected) {
+                        sfx.click();
+                        btn.classList.add('done');
+                        btn.disabled = true;
+                        correctAnswers++;
+                        nextExpected++;
+                        if (nextExpected > maxNum) {
+                            sfx.correct();
+                            setFeedback('Barcha sonlar topildi! ⚡', true);
+                            setTimeout(advanceRound, 400);
+                        } else {
+                            document.getElementById('schulteTargetNum').textContent = nextExpected;
+                        }
+                    } else {
+                        sfx.wrong();
+                        wrongAttempts++;
+                        triggerArenaShake();
+                    }
+                });
+            });
+        }
+
+        function renderAnagramGame(board) {
+            const words = [
+                { word: 'KITOB', hint: 'Bilim manbai 📚' },
+                { word: 'MANTIQ', hint: 'To‘g‘ri fikrlash ilmi 🧠' },
+                { word: 'QUYOSH', hint: 'Yorug‘lik va issiqlik yulduzi ☀️' },
+                { word: 'MAKTAB', hint: 'Bilim maskani 🏫' },
+                { word: 'KOMPYUTER', hint: 'Aqlli elektron qurilma 💻' },
+                { word: 'SAYYORA', hint: 'Quyosh atrofida aylanuvchi jism 🪐' },
+                { word: 'XOTIRA', hint: 'Ma’lumotni eslab qolish qobiliyati 💡' }
+            ];
+            const chosen = words[randInt(0, words.length - 1)];
+            let scrambled = shuffle(chosen.word.split('')).join('');
+            if (scrambled === chosen.word) {
+                scrambled = chosen.word.split('').reverse().join('');
+            }
+
+            const decoys = words.filter(w => w.word !== chosen.word).map(w => w.word);
+            const opts = [chosen.word, ...shuffle(decoys).slice(0, 3)];
+
+            const promptHtml = `
+                <div class="fs-6 text-secondary fw-bold mb-1">Ishora: ${chosen.hint}</div>
+                <div class="badge bg-info text-dark fs-2 px-4 py-2 rounded-4" style="letter-spacing: 5px;">${scrambled}</div>
+            `;
+            renderChoiceQuestion(board, promptHtml, opts, chosen.word);
+        }
+
+        function renderRomanGame(board) {
+            const pairs = [
+                { r: 'IV', v: 4 }, { r: 'IX', v: 9 }, { r: 'XII', v: 12 },
+                { r: 'XV', v: 15 }, { r: 'XIX', v: 19 }, { r: 'XXIV', v: 24 },
+                { r: 'XXX', v: 30 }, { r: 'XL', v: 40 }, { r: 'L', v: 50 }, { r: 'XC', v: 90 }
+            ];
+            const item = pairs[randInt(0, pairs.length - 1)];
+            const promptHtml = `<div class="fs-5 text-secondary fw-bold">Rim raqamini toping:</div>${item.r}`;
+            renderChoiceQuestion(board, promptHtml, generateNumericOptions(item.v, 8), item.v);
+        }
+
+        function renderQuizMathHard(board) {
+            const mode = randInt(1, 3);
+            let prompt, ans;
+            if (mode === 1) {
+                const base = randInt(6, 15);
+                ans = base * base;
+                prompt = `${base}² = ?`;
+            } else if (mode === 2) {
+                const root = randInt(5, 16);
+                ans = root;
+                prompt = `√${root * root} = ?`;
+            } else {
+                const a = randInt(12, 24);
+                const b = randInt(4, 9);
+                const c = randInt(10, 30);
+                ans = a * b - c;
+                prompt = `${a} × ${b} − ${c} = ?`;
+            }
+            renderChoiceQuestion(board, prompt, generateNumericOptions(ans, 14), ans);
+        }
+
+        function renderCipherGame(board) {
+            const shift = randInt(1, 3);
+            const words = ['AQL', 'KOD', 'ILM', 'FAN', 'DAHO', 'YULDUZ'];
+            const plain = words[randInt(0, words.length - 1)];
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+            const encode = (str) => str.split('').map(ch => {
+                const idx = alphabet.indexOf(ch);
+                return idx === -1 ? ch : alphabet[(idx + shift) % alphabet.length];
+            }).join('');
+
+            const encoded = encode(plain);
+            const opts = shuffle(words).slice(0, 4);
+            if (!opts.includes(plain)) opts[0] = plain;
+
+            const promptHtml = `
+                <div class="fs-6 text-secondary fw-bold mb-1">Har bir harf +${shift} o‘ringa surilgan:</div>
+                <div class="badge bg-dark text-warning fs-2 px-4 py-2 rounded-4" style="letter-spacing: 5px;">${encoded}</div>
+            `;
+            renderChoiceQuestion(board, promptHtml, opts, plain);
+        }
+
+        function renderPercentGame(board) {
+            const pcts = [10, 20, 25, 50, 75];
+            const p = pcts[randInt(0, pcts.length - 1)];
+            const base = randInt(2, 12) * 20;
+            const ans = (base * p) / 100;
+            const promptHtml = `${base} sonining <strong>${p}%</strong> qismi nechaga teng?`;
+            renderChoiceQuestion(board, promptHtml, generateNumericOptions(ans, 15), ans);
+        }
+
+        function renderSequenceHard(board) {
+            const a = randInt(2, 5);
+            const mult = randInt(2, 3);
+            const seq = [a, a * mult, a * mult * mult, a * Math.pow(mult, 3)];
+            const ans = a * Math.pow(mult, 4);
+            const promptHtml = `${seq.join(' , ')} , <span class="text-primary">?</span>`;
+            renderChoiceQuestion(board, promptHtml, generateNumericOptions(ans, 20), ans);
+        }
+
+        function finishGame(isTimeout) {
+            const elapsedSec = Math.min(currentGameConfig.timeLimit, (performance.now() - gameStartTime) / 1000);
+            const totalActions = correctAnswers + wrongAttempts;
+            const accuracy = totalActions > 0 ? Math.round((correctAnswers / totalActions) * 100) : 0;
+
+            let stars = 1;
+            if (isTimeout && correctAnswers === 0) {
+                stars = 0;
+            } else if (isTimeout) {
+                stars = Math.max(1, Math.min(3, Math.round((correctAnswers / totalRounds) * 3)));
+            } else {
+                const speedRatio = elapsedSec / currentGameConfig.timeLimit;
+                if (speedRatio <= 0.45 && accuracy >= 85) {
+                    stars = 5;
+                } else if (speedRatio <= 0.65 && accuracy >= 70) {
+                    stars = 4;
+                } else if (speedRatio <= 0.85) {
+                    stars = 3;
+                } else {
+                    stars = 2;
+                }
+            }
+
+            const gainedStars = saveGameStars(currentGameConfig.id, stars);
+
+            document.getElementById('statTime').textContent = elapsedSec.toFixed(1) + 's';
+            document.getElementById('statAccuracy').textContent = accuracy + '%';
+            document.getElementById('statStars').textContent = `+${gainedStars} ⭐`;
+
+            const titleEl = document.getElementById('resultTitle');
+            const subEl = document.getElementById('resultSubtitle');
+            const emojiEl = document.getElementById('resultEmoji');
+
+            if (stars === 5) {
+                emojiEl.textContent = '🏆';
+                titleEl.textContent = 'Super Daho! 5 Yulduz!';
+                subEl.textContent = 'Chaqmoq tezligi va mukammal aniqlik!';
+                sfx.fanfare();
+                launchConfetti();
+            } else if (stars >= 3) {
+                emojiEl.textContent = '🌟';
+                titleEl.textContent = 'Zo‘r natija!';
+                subEl.textContent = 'Yana biroz tezroq harakat qilsangiz 5 yulduz olasiz!';
+                sfx.fanfare();
+            } else {
+                emojiEl.textContent = '💪';
+                titleEl.textContent = isTimeout ? 'Vaqt tugadi!' : 'Yaxshi urinish!';
+                subEl.textContent = 'Qayta urinib ko‘ring va ko‘proq yulduz yig‘ing!';
+                sfx.wrong();
+            }
+
+            for (let i = 1; i <= 5; i++) {
+                const st = document.getElementById('rStar' + i);
+                st.classList.remove('earned');
+                if (i <= stars) {
+                    setTimeout(() => {
+                        st.classList.add('earned');
+                    }, i * 160);
+                }
+            }
+
+            if (!resultModalInstance) {
+                resultModalInstance = new bootstrap.Modal(document.getElementById('resultModal'));
+            }
+            resultModalInstance.show();
+        }
+
+        function restartCurrentGame() {
+            if (resultModalInstance) resultModalInstance.hide();
+            launchGame(currentAgeKey, currentGameConfig.id);
+        }
+
+        function backToGamesFromResult() {
+            if (resultModalInstance) resultModalInstance.hide();
+            exitCurrentGame();
+        }
+
+        function goToShopFromResult() {
+            if (resultModalInstance) resultModalInstance.hide();
+            openShopScreen();
+        }
+
+        function launchConfetti() {
+            const colors = ['#facc15', '#ec4899', '#3b82f6', '#22c55e', '#a855f7', '#f97316'];
+            for (let i = 0; i < 48; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + 'vw';
+                piece.style.backgroundColor = colors[randInt(0, colors.length - 1)];
+                piece.style.animationDuration = (Math.random() * 1.5 + 1.8) + 's';
+                piece.style.animationDelay = (Math.random() * 0.4) + 's';
+                document.body.appendChild(piece);
+                setTimeout(() => piece.remove(), 3500);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updateTotalStarsUI();
+            applyEquippedCosmetics();
+        });
+    </script>
+</body>
+</html>
